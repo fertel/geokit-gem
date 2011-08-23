@@ -664,7 +664,7 @@ module Geokit
             
           res.lat=addr['geometry']['location']['lat'].to_f
           res.lng=addr['geometry']['location']['lng'].to_f
-
+	  begin
           ne=Geokit::LatLng.new(
             addr['geometry']['viewport']['northeast']['lat'].to_f, 
             addr['geometry']['viewport']['northeast']['lng'].to_f
@@ -674,7 +674,8 @@ module Geokit
             addr['geometry']['viewport']['southwest']['lng'].to_f
           )
           res.suggested_bounds = Geokit::Bounds.new(sw,ne)
-
+	  rescue
+	  end
           if ret
             ret.all.push(res)
           else
